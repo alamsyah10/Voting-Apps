@@ -1,0 +1,9 @@
+.buton ul button{
+  padding: 10px;
+    width: 100%;
+
+  }
+  .right{
+    float: right;
+    display: block;
+  }
