@@ -41,8 +41,16 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="create.php">
               <i class="fab"></i> New Poll</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="auth_php/login.php">
+              <i class="fab"></i>Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="auth_php/register.php">
+              <i class="fab"></i>Register</a>
           </li>
 
         </ul>

@@ -53,14 +53,20 @@
 
     <?php
       $ambil = explode("/",$_SERVER['REQUEST_URI']);
-
+    //  var_dump($ambil); echo "<br>";
       $slug = $ambil[2];
   //    echo $slug;
 
-      $display = "SELECT title, id FROM poll_questions WHERE slug = '$slug'";
+      // $display = "SELECT title, id FROM poll_questions WHERE slug = '$slug'";
+      //
+      // $result = $link->query($display);
+      // $row = $result->fetch_assoc();
 
-      $result = $link->query($display);
-      $row = $result->fetch_assoc();
+      $display = "SELECT title, id FROM poll_questions WHERE slug = ?";
+      $result = $link->prepare($display);
+      $result->bind_param("s", $slug);
+      $result->execute();
+      $row = $result->get_result()->fetch_assoc();
 
     //  var_dump($row);
       $linkslug = "\"http://localhost:8080/votingweb/".$slug."\"";
@@ -84,10 +90,22 @@
 
 
       }
+      echo "<form  style=\"margin: 0 auto; width:25%;\" action=\"$linkslug\" method=\"post\">";
+      echo "<input name=\"newoption\" id=\"defaultContactFormName\" type=\"text\" class = \"form-control\" placeholder = \"Input opsi baru...\">";
+
+      echo "</form>";
 
 
       if(isset($_POST))
       {
+        if(isset($_POST['newoption'])){
+            echo $_POST['newoption']."<br>";
+            $simpan = $_POST['newoption'];
+            $newQuery = "INSERT INTO poll_answers(title, votes,  question_id) VALUES ('$simpan',1,'$idtitle')";
+            mysqli_query($link, $newQuery);
+            header('Location: '.$slug);
+        }
+
         foreach($_POST as $key=>$value)
          {
            $newQuery = "UPDATE poll_answers SET votes = votes+1 WHERE id = '$key'";
