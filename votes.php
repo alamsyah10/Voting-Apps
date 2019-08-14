@@ -28,6 +28,49 @@
      <div  class="container container-fluid">
 
    <?php
+   $ambil = explode("/",$_SERVER['REQUEST_URI']);
+ //  var_dump($ambil); echo "<br>";
+   $slug = $ambil[2];
+//    echo $slug;
+
+   // $display = "SELECT title, id FROM poll_questions WHERE slug = '$slug'";
+   //
+   // $result = $link->query($display);
+   // $row = $result->fetch_assoc();
+
+   $display = "SELECT title, id FROM poll_questions WHERE slug = ?";
+   $result = $link->prepare($display);
+   $result->bind_param("s", $slug);
+   $result->execute();
+   $row = $result->get_result()->fetch_assoc();
+
+ //  var_dump($row);
+   $linkslug = "\"http://localhost:8080/votingweb/".$slug."\"";
+
+
+   $idtitle = $row["id"];
+   $displayvote = "SELECT * FROM poll_answers WHERE question_id = '$idtitle' GROUP BY id";
+   $resultvote = $link->query($displayvote);
+   //var_dump($resultvote);
+   $rowvotes = $resultvote->fetch_all(MYSQLI_ASSOC);
+   //var_dump($rowvotes);
+
+   $displayvote = "SELECT * FROM poll_answers WHERE question_id = '$idtitle' GROUP BY id";
+   $resultvote = $link->query($displayvote);
+   //var_dump($resultvote);
+   $rowvotes = $resultvote->fetch_all(MYSQLI_ASSOC);
+   $dataPoints = array(
+     array("label" => $rowvotes[0]['title'], "y" => $rowvotes[0]['votes'])
+   );
+   for ($i=1; $i < sizeof($rowvotes); $i++) {
+     $jdul = $rowvotes[$i]['title'];
+
+     $rowvotes[$i]['title'] = preg_replace('~[\r\n]+~', '', $jdul);
+     $dataPoints[$i]["label"] = $rowvotes[$i]['title'];
+     $dataPoints[$i]["y"] = $rowvotes[$i]['votes'];
+
+
+   }
     session_start();
     if(!isset($_SESSION['user'])){
 ?>
@@ -100,58 +143,9 @@ echo  "<div id=\"chartContainer\" style=\"height: 370px; width: 100%;\"></div>";
 </nav>
 
   <?php
+
 echo  "<div id=\"chartContainer\" style=\"height: 370px; width: 100%;\"></div>";
-    $ambil = explode("/",$_SERVER['REQUEST_URI']);
-  //  var_dump($ambil); echo "<br>";
-    $slug = $ambil[2];
-//    echo $slug;
 
-    // $display = "SELECT title, id FROM poll_questions WHERE slug = '$slug'";
-    //
-    // $result = $link->query($display);
-    // $row = $result->fetch_assoc();
-
-    $display = "SELECT title, id FROM poll_questions WHERE slug = ?";
-    $result = $link->prepare($display);
-    $result->bind_param("s", $slug);
-    $result->execute();
-    $row = $result->get_result()->fetch_assoc();
-
-  //  var_dump($row);
-    $linkslug = "\"http://localhost:8080/votingweb/".$slug."\"";
-
-
-    $idtitle = $row["id"];
-    $displayvote = "SELECT * FROM poll_answers WHERE question_id = '$idtitle' GROUP BY id";
-    $resultvote = $link->query($displayvote);
-    //var_dump($resultvote);
-    $rowvotes = $resultvote->fetch_all(MYSQLI_ASSOC);
-    //var_dump($rowvotes);
-
-    $displayvote = "SELECT * FROM poll_answers WHERE question_id = '$idtitle' GROUP BY id";
-    $resultvote = $link->query($displayvote);
-    //var_dump($resultvote);
-    $rowvotes = $resultvote->fetch_all(MYSQLI_ASSOC);
-    $dataPoints = array(
-      array("label" => $rowvotes[0]['title'], "y" => $rowvotes[0]['votes'])
-    );
-  // var_dump($rowvotes);
-
-//    echo sizeof($rowvotes);
-    for ($i=1; $i < sizeof($rowvotes); $i++) {
-      $jdul = $rowvotes[$i]['title'];
-
-      $rowvotes[$i]['title'] = preg_replace('~[\r\n]+~', '', $jdul);
-
-      // $dataPoints += array(
-      //   array("label" => $rowvotes[$i]['title'], "y"=> $rowvotes[$i]['votes'])
-      // );
-
-      $dataPoints[$i]["label"] = $rowvotes[$i]['title'];
-      $dataPoints[$i]["y"] = $rowvotes[$i]['votes'];
-
-
-    }
   echo "<div style=\"text-align:center; margin:auto; display : block\" class=\"btn-group-vertical\" role=\"group\" aria-label=\"Vertical button group\">";
   foreach ($rowvotes as $rowvote) {
     $voteid = $rowvote["id"];
@@ -182,11 +176,11 @@ echo  "<div id=\"chartContainer\" style=\"height: 370px; width: 100%;\"></div>";
 
     foreach($_POST as $key=>$value)
      {
+       echo $key." ".$value."<br>";
        $newQuery = "UPDATE poll_answers SET votes = votes+1 WHERE id = '$key'";
        $resultNewQuery = $link -> query($newQuery);
+               header('Location: '.$slug);
      }
-
-
 
   }
 }
@@ -197,16 +191,7 @@ echo  "<div id=\"chartContainer\" style=\"height: 370px; width: 100%;\"></div>";
     <br/>
 
     <?php
-  //    var_dump($rowvotes);
-
-
-
-
-    //  var_dump($rowvotes);
-
-
       echo "</div>";
-  //    mysqli_close($link);
      ?>
      <script>
        window.onload = function () {
