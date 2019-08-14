@@ -31,70 +31,75 @@
     session_start();
     //  echo $_SESSION['user'];
       if(!isset($_SESSION['user'])){
-        echo "<nav class=\"mb-1 navbar navbar-expand-lg navbar-dark info-color\">";
-        echo   "<a class=\"navbar-brand\" href=\"index.php\">Voting Apps</a>";
-        echo   "<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent-4\"";
-        echo     "aria-controls=\"navbarSupportedContent-4\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">";
-        echo     "<span class=\"navbar-toggler-icon\"></span>";
-        echo  "</button>";
-        echo  "<div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent-4\">";
-        echo    "<ul class=\"navbar-nav ml-auto\">";
-        echo      "<li class=\"nav-item active\">";
-        echo        "<a class=\"nav-link\" href=\"index.php\">";
-        echo          "<i class=\"fab\"></i> Home";
-        echo         "<span class=\"sr-only\">(current)</span>";
-        echo      "</a>";
-        echo      "</li>";
-        echo      "<li class=\"nav-item\">";
-        echo        "<a class=\"nav-link\" href=\"create.php\">";
-        echo          "<i class=\"fab\"></i> New Poll</a>";
-        echo      "</li>";
-        echo     "<li class=\"nav-item\">";
-        echo     "<a class=\"nav-link\" href=\"auth_php/login.php\">";
-        echo     "<i class=\"fab\"></i>Login</a>";
-        echo     "</li>";
-        echo     "<li class=\"nav-item\">";
-        echo     "<a class=\"nav-link\" href=\"auth_php/register.php\">";
-        echo          "<i class=\"fab\"></i>Register</a>";
-        echo    "</li>";
+      ?>
+      <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
+        <a class="navbar-brand" href="index.php">Voting Apps</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+          aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="index.php">
+                <i class="fab"></i> Home
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="create.php">
+                <i class="fab"></i> New Poll</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="auth_php/login.php">
+                <i class="fab"></i>Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="auth_php/register.php">
+                <i class="fab"></i>Register</a>
+            </li>
 
-        echo    "</ul>";
-        echo  "</div>";
-        echo "</nav>";
-      }else{
-        echo "<nav class=\"mb-1 navbar navbar-expand-lg navbar-dark info-color\">";
-        echo   "<a class=\"navbar-brand\" href=\"index.php\">Voting Apps</a>";
-        echo   "<button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarSupportedContent-4\"";
-        echo     "aria-controls=\"navbarSupportedContent-4\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">";
-        echo     "<span class=\"navbar-toggler-icon\"></span>";
-        echo  "</button>";
-        echo  "<div class=\"collapse navbar-collapse\" id=\"navbarSupportedContent-4\">";
-        echo    "<ul class=\"navbar-nav ml-auto\">";
-        echo      "<li class=\"nav-item active\">";
-        echo        "<a class=\"nav-link\" href=\"index.php\">";
-        echo          "<i class=\"fab\"></i> Home";
-        echo         "<span class=\"sr-only\">(current)</span>";
-        echo      "</a>";
-        echo      "</li>";
-        echo      "<li class=\"nav-item\">";
-        echo        "<a class=\"nav-link\" href=\"create.php\">";
-        echo          "<i class=\"fab\"></i> New Poll</a>";
-        echo      "</li>";
-        echo     "<li class=\"nav-item\">";
-          echo        "<a class=\"nav-link\" >";
-        echo     "<i class=\"fab\"></i>"."Hi ".$_SESSION['user']."!"."</a>";
-        echo     "</li>";
-        echo     "<li class=\"nav-item\">";
-          echo        "<a class=\"nav-link\" href=\"auth_php/logout.php\">";
-        echo     "<i class=\"fab\"></i>"."Logout"."</a>";
-        echo     "</li>";
-
-        echo    "</ul>";
-        echo  "</div>";
-        echo "</nav>";
-      }
-
+          </ul>
+        </div>
+      </nav>
+      <?php
+    }else{
      ?>
+     <nav class="mb-1 navbar navbar-expand-lg navbar-dark info-color">
+       <a class="navbar-brand" href="index.php">Voting Apps</a>
+       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
+         aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+         <ul class="navbar-nav ml-auto">
+           <li class="nav-item active">
+             <a class="nav-link" href="index.php">
+               <i class="fab"></i> Home
+               <span class="sr-only">(current)</span>
+             </a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" href="create.php">
+               <i class="fab"></i> New Poll</a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link">
+               <i class="fab"></i><?php echo "Hi ".$_SESSION['user']."!" ?> </a>
+           </li>
+           <li class="nav-item">
+             <a class="nav-link" href="auth_php/logout.php">
+               <i class="fab"></i>Logout</a>
+           </li>
+
+         </ul>
+       </div>
+     </nav>
+     <?php
+
+   }
+
+      ?>
     <br/>
     <h1>Voting gadungan</h1>
 

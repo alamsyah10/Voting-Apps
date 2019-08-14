@@ -29,6 +29,11 @@
        if(!empty(trim($nama)) && !empty(trim($pass))){
          if (cek_data($nama, $pass)){
            session_start();
+
+           $query = "SELECT id FROM users WHERE username = '$nama' ";
+           $result = $link -> query($query);
+           $row = $result -> fetch_assoc();
+           $_SESSION['iduser'] = $row['id'];
            $_SESSION['user'] = $nama;
            header('Location: ../index.php');
         //   echo $_SESSION['user'];

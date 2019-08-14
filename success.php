@@ -51,7 +51,7 @@
 
     <?php
     session_start();
-
+    var_dump($_SESSION);
     if(isset($_SESSION['title']) && isset($_SESSION['listvote'])){
       $valid = true;
       $votes = explode("\n",$_SESSION['listvote']);
@@ -73,10 +73,14 @@
         $slug = $potongJudul . date('m-d-Y', time()).date('his');
         $title = $_SESSION['title'];
   //      echo $slug;
-        $query = "INSERT INTO poll_questions (title,slug)
-                  VALUES ('$title','$slug')";
+
+        $iduser = $_SESSION['iduser'];
+  ///      echo $newQ ."<br>";
+        $query = "INSERT INTO poll_questions (title,slug,created_by)
+                  VALUES ('$title','$slug',$iduser)";
 
         if(mysqli_query($link, $query)){
+    //      echo "ok";
           $query2 = "";
           $last_id = mysqli_insert_id($link);
           foreach ($votes as $vote) {
